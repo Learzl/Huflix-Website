@@ -1,35 +1,30 @@
-/* Global Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f5f5, #ffffff);
+    color: #333;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #f5f5f5, #e0e0e0); /* Soft gradient background */
-    color: #333;
 }
 
 nav {
-    background-color: #222;
+    background: #333;
     color: #fff;
-    padding: 1em 2em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.5em;
+    text-align: center;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    margin-right: 1.5em;
-    font-size: 1em;
-    transition: color 0.3s;
+    padding: 0.5em;
+    font-weight: bold;
 }
 
 nav a:hover {
-    color: #ff4500; /* Accent color for hover effect */
+    background-color: #555;
 }
 
-#search-bar {
+.search-bar {
     padding: 0.5em;
     font-size: 0.9em; /* Reduced font size for the search bar */
     border: 1px solid #ddd;
@@ -57,31 +52,28 @@ nav a:hover {
     font-weight: bold;
 }
 
-.film-card {
+.film-card, .series-card {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 1.5em;
     margin-bottom: 1.5em;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.film-card h3 {
+.film-card h3, .series-card h3 {
     margin-top: 0;
     font-size: 1.5em;
 }
 
-.film-card a {
+.film-card a, .series-card a {
     color: #ff4500; /* Accent color for link */
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
 }
 
-.film-card a:hover {
+.film-card a:hover, .series-card a:hover {
     color: #ff6347; /* Slightly different shade on hover */
 }
 
@@ -116,7 +108,7 @@ label {
     font-weight: bold;
 }
 
-input[type="text"] {
+input[type="text"], select {
     width: 100%;
     padding: 0.75em;
     font-size: 1em;
@@ -127,7 +119,7 @@ input[type="text"] {
     transition: border-color 0.3s;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, select:focus {
     border-color: #ff4500; /* Accent color on focus */
 }
 
@@ -146,7 +138,6 @@ button:hover {
     background-color: #e03d00; /* Darker shade for hover effect */
 }
 
-/* Film detail page styles */
 #film-details {
     text-align: center;
 }
@@ -158,13 +149,51 @@ button:hover {
     border-radius: 8px;
 }
 
+.series-card {
+    padding: 1.5em;
+}
+
+.season {
+    margin-bottom: 1em;
+}
+
+.episode-selector {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.episode-selector:focus {
+    border-color: #ff4500; /* Accent color on focus */
+}
+
+.watch-now-button {
+    background-color: #28a745; /* Success color for watch now button */
+    color: #fff;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+    margin-top: 0.5em;
+}
+
+.watch-now-button:hover {
+    background-color: #218838; /* Darker shade for hover effect */
+}
+
 @media (max-width: 768px) {
-    .film-card {
+    .film-card, .series-card {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .film-card a {
-        margin-bottom: 0.5em;
+    .film-card h3, .series-card h3 {
+        font-size: 1.25em;
     }
 }

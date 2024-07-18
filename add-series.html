@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Series</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="title">Ajouter une Série</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="add-film.html">Ajouter un Film</a>
+        <a href="add-series.html">Ajouter une Série</a>
+        <input type="text" id="search-bar" placeholder="Rechercher...">
+    </nav>
+
+    <div class="container">
+        <form id="add-series-form">
+            <label for="series-title">Titre de la Série:</label>
+            <input type="text" id="series-title" name="series-title" required>
+
+            <label for="season">Saison:</label>
+            <input type="text" id="season" name="season" required>
+
+            <label for="episode">Episode:</label>
+            <input type="text" id="episode" name="episode" required>
+
+            <label for="series-link">Lien:</label>
+            <input type="text" id="series-link" name="series-link" required>
+
+            <button type="submit">Ajouter une Série</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

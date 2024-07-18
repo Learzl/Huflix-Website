@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un Film - Huflix</title>
+    <title>Add Film</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="title">Huflix</div>
+    <div class="title">Add Film</div>
     <nav>
         <a href="index.html">Home</a>
-        <a href="add-film.html">Ajouter un Film</a>
-        <input type="text" id="search-bar" placeholder="Rechercher...">
+        <a href="add-film.html">Add Film</a>
+        <a href="add-series.html">Add Series</a>
+        <input type="text" id="search-bar" placeholder="Search...">
     </nav>
 
     <div class="container">
-        <h1>Ajouter un film</h1>
         <form id="add-film-form">
-            <label for="film-title">Titre du film:</label><br>
-            <input type="text" id="film-title" name="film-title"><br><br>
-            <label for="film-link">Lien du film:</label><br>
-            <input type="text" id="film-link" name="film-link"><br><br>
-            <button type="submit">Ajouter le film</button>
+            <label for="film-title">Film Title:</label>
+            <input type="text" id="film-title" name="film-title" required>
+
+            <label for="film-link">Embed Link:</label>
+            <input type="text" id="film-link" name="film-link" required>
+
+            <button type="submit">Add Film</button>
         </form>
     </div>
 

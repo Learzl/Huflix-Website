@@ -1,71 +1,80 @@
-// Sample film data
+// Sample content data
 const films = JSON.parse(localStorage.getItem('films')) || [
     {
         title: "Film 1",
         embedLink: "https://uqload.ws/embed-fgjfmafeasoo.html"
-    },
-    {
-        title: "Film 2",
-        embedLink: "https://uqload.ws/embed-fgjfmafeasoo.html"
-    },
-    {
-        title: "Film 3",
-        embedLink: "https://uqload.ws/embed-fgjfmafeasoo.html"
     }
 ];
 
-// Function to display films on the home page
+const series = JSON.parse(localStorage.getItem('series')) || [
+    {
+        title: "Series 1",
+        seasons: {
+            "Season 1": [
+                { episode: "Episode 1", link: "https://uqload.ws/embed-fgjfmafeasoo.html" },
+                { episode: "Episode 2", link: "https://uqload.ws/embed-fgjfmafeasoo.html" }
+            ]
+        }
+    }
+];
+
 function displayFilms() {
     const filmList = document.getElementById('film-list');
+    filmList.innerHTML = ''; // Clear existing content
     films.forEach((film, index) => {
         const filmCard = document.createElement('div');
         filmCard.className = 'film-card';
         filmCard.innerHTML = `
             <h3>${film.title}</h3>
-            <a href="film.html?title=${encodeURIComponent(film.title)}">Watch Now</a>
-            <button class="delete-button" onclick="deleteFilm(${index})">Delete</button>
+            <a href="${film.embedLink}" target="_blank">Regarder maintenant</a>
+            <button class="delete-button" onclick="deleteFilm(${index})">Supprimer</button>
         `;
         filmList.appendChild(filmCard);
     });
 }
 
-// Function to display film details on the film detail page
-function displayFilmDetails() {
-    const params = new URLSearchParams(window.location.search);
-    const title = params.get('title');
-    const film = films.find(film => film.title === title);
-    const filmDetails = document.getElementById('film-details');
-    if (film) {
-        filmDetails.innerHTML = `
-            <h1>${film.title}</h1>
-            <iframe src="${film.embedLink}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="100%" height="80vh" allowfullscreen></iframe>
-        `;
-    } else {
-        filmDetails.innerHTML = `<p>Film not found</p>`;
-    }
-}
-
-// Function to handle search
-function handleSearch() {
-    const searchBar = document.getElementById('search-bar');
-    searchBar.addEventListener('input', (event) => {
-        const query = event.target.value.toLowerCase();
-        const filmList = document.getElementById('film-list');
-        filmList.innerHTML = '';
-        films.filter(film => film.title.toLowerCase().includes(query)).forEach((film, index) => {
-            const filmCard = document.createElement('div');
-            filmCard.className = 'film-card';
-            filmCard.innerHTML = `
-                <h3>${film.title}</h3>
-                <a href="film.html?title=${encodeURIComponent(film.title)}">Watch Now</a>
-                <button class="delete-button" onclick="deleteFilm(${index})">Delete</button>
+function displaySeries() {
+    const seriesList = document.getElementById('series-list');
+    seriesList.innerHTML = ''; // Clear existing content
+    series.forEach((serie, index) => {
+        const seriesCard = document.createElement('div');
+        seriesCard.className = 'series-card';
+        let seasonsHtml = '';
+        for (const [season, episodes] of Object.entries(serie.seasons)) {
+            let episodesHtml = '';
+            episodes.forEach((episode) => {
+                episodesHtml += `<option value="${episode.link}" data-index="${index}" data-season="${season}" data-episode="${episode.episode}">${episode.episode}</option>`;
+            });
+            seasonsHtml += `
+                <div class="season">
+                    <strong>${season}</strong>
+                    <select class="episode-selector" data-index="${index}" data-season="${season}">
+                        <option value="">Select Episode</option>
+                        ${episodesHtml}
+                    </select>
+                </div>
             `;
-            filmList.appendChild(filmCard);
-        });
+        }
+        seriesCard.innerHTML = `
+            <h3>${serie.title}</h3>
+            ${seasonsHtml}
+            <button class="delete-button" onclick="deleteSeries(${index})">Supprimer</button>
+        `;
+        seriesList.appendChild(seriesCard);
     });
 }
 
-// Function to handle adding a new film
+function handleSearch() {
+    const searchBar = document.getElementById('search-bar');
+    if (searchBar) {
+        searchBar.addEventListener('input', (event) => {
+            const query = event.target.value.toLowerCase();
+            displayFilms();
+            displaySeries();
+        });
+    }
+}
+
 function handleAddFilm() {
     const addFilmForm = document.getElementById('add-film-form');
     if (addFilmForm) {
@@ -85,23 +94,80 @@ function handleAddFilm() {
     }
 }
 
-// Function to handle deleting a film
-function deleteFilm(index) {
-    if (confirm('Are you sure you want to delete this film?')) {
-        films.splice(index, 1);
-        localStorage.setItem('films', JSON.stringify(films));
-        window.location.reload();
+function handleAddSeries() {
+    const addSeriesForm = document.getElementById('add-series-form');
+    if (addSeriesForm) {
+        addSeriesForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const title = document.getElementById('series-title').value;
+            const season = document.getElementById('season').value;
+            const episode = document.getElementById('episode').value;
+            const embedLink = document.getElementById('series-link').value;
+            if (title && season && episode && embedLink) {
+                const existingSeries = series.find(serie => serie.title === title);
+                if (!existingSeries) {
+                    series.push({
+                        title,
+                        seasons: {
+                            [season]: [{ episode, link: embedLink }]
+                        }
+                    });
+                } else {
+                    if (!existingSeries.seasons[season]) {
+                        existingSeries.seasons[season] = [];
+                    }
+                    existingSeries.seasons[season].push({ episode, link: embedLink });
+                }
+                localStorage.setItem('series', JSON.stringify(series));
+                alert('Series added successfully!');
+                window.location.href = 'index.html';
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
     }
 }
 
-// Initialize the page based on the URL
-window.onload = function() {
+function deleteFilm(index) {
+    if (confirm('Etes vous sûr de vouloir supprimer ce film ?')) {
+        films.splice(index, 1);
+        localStorage.setItem('films', JSON.stringify(films));
+        displayFilms();
+    }
+}
+
+function deleteSeries(index) {
+    if (confirm('Etes vous sûr de vouloir supprimer cette série ?')) {
+        series.splice(index, 1);
+        localStorage.setItem('series', JSON.stringify(series));
+        displaySeries();
+    }
+}
+
+function handleSeasonChange(event) {
+    const selector = event.target;
+    const episodeLink = selector.value;
+    if (episodeLink) {
+        window.open(episodeLink, '_blank');
+    }
+}
+
+window.onload = () => {
     if (document.getElementById('film-list')) {
         displayFilms();
         handleSearch();
-    } else if (document.getElementById('film-details')) {
-        displayFilmDetails();
-    } else if (document.getElementById('add-film-form')) {
+    }
+    if (document.getElementById('series-list')) {
+        displaySeries();
+    }
+    if (document.getElementById('add-film-form')) {
         handleAddFilm();
     }
+    if (document.getElementById('add-series-form')) {
+        handleAddSeries();
+    }
+
+    document.querySelectorAll('.episode-selector').forEach(selector => {
+        selector.addEventListener('change', handleSeasonChange);
+    });
 };
