@@ -29,7 +29,6 @@ function displayFilms() {
     });
 }
 
-
 // Function to display film details on the film detail page
 function displayFilmDetails() {
     const params = new URLSearchParams(window.location.search);
@@ -45,7 +44,6 @@ function displayFilmDetails() {
         filmDetails.innerHTML = `<p>Film not found</p>`;
     }
 }
-
 
 // Function to handle search
 function handleSearch() {
@@ -79,7 +77,7 @@ function handleAddFilm() {
                 films.push({ title, embedLink });
                 localStorage.setItem('films', JSON.stringify(films));
                 alert('Film added successfully!');
-                displayFilmDetails({ title, embedLink }); // display the newly added film in full screen
+                window.location.href = 'index.html';
             } else {
                 alert('Please fill in both fields.');
             }
@@ -107,13 +105,3 @@ window.onload = function() {
         handleAddFilm();
     }
 };
-
-// Function to display the newly added film in full screen
-function displayNewlyAddedFilm(title, embedLink) {
-    const filmDetails = document.getElementById('film-details');
-    filmDetails.innerHTML = `
-        <h1>${title}</h1>
-        <iframe src="${embedLink}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" width="100%" height="80vh" allowfullscreen></iframe>
-    `;
-    window.history.pushState({}, '', `film.html?title=${encodeURIComponent(title)}`);
-}

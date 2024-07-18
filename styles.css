@@ -58,4 +58,37 @@ nav a {
         text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000;
     }
     50% {
-        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 50px #ff0000;
+    }
+}
+
+.title {
+    color: #ff0000;
+    animation: neon 1.5s ease-in-out infinite alternate;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label, input {
+    margin-bottom: 1em;
+}
+
+button {
+    padding: 0.5em;
+    font-size: 1em;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: darkred;
+}
